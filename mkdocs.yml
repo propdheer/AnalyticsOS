@@ -12,6 +12,8 @@ theme:
 
 nav:
   - Home: docs/index.md
+  - Development:
+      - Windows Setup: docs/development-windows.md
   - Handbook:
       - Product:
           - Welcome: handbook/volume-1-product/00-welcome.md

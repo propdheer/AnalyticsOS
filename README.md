@@ -10,40 +10,43 @@ It is not a chatbot. It is an operating system for professional memory, project 
 
 | Field | Value |
 |---|---|
-| Version | `v0.0.2-alpha` |
+| Version | `v0.0.3-alpha` |
 | Sprint | Sprint 0 |
-| Milestone | Repository Foundation |
+| Milestone | Repository Foundation Patch |
 | Status | In development |
 
-## Core Philosophy
+## Development Quick Start
 
-AnalyticsOS is built on four non-negotiable principles:
+```powershell
+cd "C:\Users\Dheer.Madhusudan\OneDrive - Sundrop Brands Limited\Desktop\AnalyticsOS"
+.\.venv\Scripts\Activate.ps1
+python --version
+```
 
-1. **Local-first** — professional knowledge should remain under user control.
-2. **Knowledge compounds** — the platform becomes more valuable the longer it is used.
-3. **Human-in-the-loop** — AI suggests, humans decide.
-4. **Plugin-first** — every capability should be modular and replaceable.
+Install dependencies:
 
-## Initial Architecture
+```powershell
+.\scripts\install-python-deps.ps1
+```
+
+Run backend:
+
+```powershell
+.\scripts\run-backend.ps1
+```
+
+Run tests:
+
+```powershell
+.\scripts\test-backend.ps1
+```
+
+## Backend Endpoints
 
 ```text
-AnalyticsOS Dashboard
-        |
-        v
-AnalyticsOS API
-        |
-        +-- Knowledge Engine
-        +-- Memory Engine
-        +-- Search Engine
-        +-- Automation Engine
-        |
-        v
-Local Infrastructure
-        |
-        +-- Ollama
-        +-- PostgreSQL
-        +-- AnythingLLM
-        +-- OpenMemory
+http://127.0.0.1:8000/
+http://127.0.0.1:8000/health
+http://127.0.0.1:8000/version
 ```
 
 ## Repository Layout
@@ -61,41 +64,6 @@ adr/                 Architecture decision records
 rfc/                 Request for comments documents
 templates/           Reusable documentation templates
 scripts/             Developer automation scripts
-```
-
-## Development Quick Start
-
-```powershell
-cd "C:\Users\Dheer.Madhusudan\OneDrive - Sundrop Brands Limited\Desktop\AnalyticsOS"
-.\.venv\Scripts\Activate.ps1
-python --version
-```
-
-## Backend Health Check
-
-```powershell
-cd backend
-python -m uvicorn app.main:app --reload
-```
-
-Then open:
-
-```text
-http://127.0.0.1:8000/health
-```
-
-## Documentation
-
-The handbook begins in:
-
-```text
-handbook/
-```
-
-The documentation website scaffold is configured through:
-
-```text
-mkdocs.yml
 ```
 
 ## License

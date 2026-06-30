@@ -4,6 +4,20 @@ All notable changes to AnalyticsOS will be documented in this file.
 
 This project follows semantic versioning.
 
+## [0.0.3-alpha] - 2026-06-30
+
+### Added
+- `/version` API endpoint.
+- PowerShell scripts for installing dependencies, running backend, and running tests.
+- Windows development setup documentation.
+
+### Changed
+- Updated backend settings to use Pydantic v2 `SettingsConfigDict`.
+- Updated API version to `0.0.3-alpha`.
+
+### Fixed
+- Removed Pydantic class-based config deprecation warning.
+
 ## [0.0.2-alpha] - 2026-06-30
 
 ### Added
