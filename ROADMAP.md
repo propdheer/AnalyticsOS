@@ -2,19 +2,37 @@
 
 ## Completed
 
-### v0.3.2-alpha
+### v0.2.0-alpha
+- First usable local MVP.
+
+### v0.3.x-alpha
+- Smart system foundation.
+- Action registry.
+- Ollama execution.
 - Action run history.
-- Save action output as Knowledge Asset.
-- Open previous action runs.
+- Save outputs as knowledge.
 
-## Next
+### v0.4.0-alpha
+- AnythingLLM query integration.
+- Ask Knowledge Base tab.
+- Custom Action Builder.
 
-### v0.3.3-alpha — AnythingLLM Query Integration
-- AnythingLLM workspace config.
-- Query workspace endpoint.
-- Source-aware RAG answers.
+### v0.4.1-alpha
+- Final UX polish.
+- Home command center.
+- Grouped navigation.
+- Next best step guidance.
 
-### v0.3.4-alpha — Action Builder
-- Create custom actions from the UI.
-- Edit action templates.
-- Categorize actions.
+## Next Phase
+
+### v0.5.0-alpha — Durable Platform
+- PostgreSQL persistence.
+- SQLAlchemy repositories.
+- Alembic migrations.
+- Optional pgvector semantic search.
+
+### v1.0.0 — Internal Product Release
+- Installer/runbook.
+- Stable config.
+- Hardened backup/restore.
+- User documentation.

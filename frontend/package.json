@@ -1,24 +1,24 @@
 {
-    "name":  "analyticsos-frontend",
-    "version":  "0.3.0-alpha",
-    "private":  true,
-    "scripts":  {
-                    "dev":  "next dev -H 127.0.0.1",
-                    "build":  "next build",
-                    "start":  "next start -H 127.0.0.1",
-                    "lint":  "next lint"
-                },
-    "dependencies":  {
-                         "next":  "latest",
-                         "react":  "latest",
-                         "react-dom":  "latest"
-                     },
-    "devDependencies":  {
-                            "@types/node":  "latest",
-                            "@types/react":  "latest",
-                            "@types/react-dom":  "latest",
-                            "typescript":  "latest",
-                            "eslint":  "latest",
-                            "eslint-config-next":  "latest"
-                        }
+  "name": "analyticsos-frontend",
+  "version": "0.4.1-alpha",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -H 127.0.0.1",
+    "build": "next build",
+    "start": "next start -H 127.0.0.1",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "typescript": "latest",
+    "eslint": "latest",
+    "eslint-config-next": "latest"
+  }
 }

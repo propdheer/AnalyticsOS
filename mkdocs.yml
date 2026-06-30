@@ -22,6 +22,9 @@ nav:
       - Dashboard MVP: docs/dashboard-mvp.md
       - Knowledge Indexing: docs/knowledge-indexing.md
       - Smart System: docs/smart-system.md
+      - Action Builder: docs/action-builder.md
+      - AnythingLLM Integration: docs/anythingllm-integration.md
+      - Final UX: docs/final-ux.md
   - Handbook:
       - Product:
           - Overview: handbook/volume-1-product/README.md

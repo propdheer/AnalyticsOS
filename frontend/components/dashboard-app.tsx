@@ -17,17 +17,20 @@ import {
   getProjects,
   getPromptTemplates,
 } from "@/lib/api";
+import { ActionBuilderPanel } from "@/components/action-builder-panel";
 import { ActionsPanel } from "@/components/actions-panel";
 import { BackupPanel } from "@/components/backup-panel";
-import { DashboardCard } from "@/components/dashboard-card";
+import { CommandCenterPanel } from "@/components/command-center-panel";
 import { IntegrationsPanel } from "@/components/integrations-panel";
-import { ObjectList } from "@/components/object-list";
+import { RagPanel } from "@/components/rag-panel";
 import { ResourceManager } from "@/components/resource-manager";
 import { SearchPanel } from "@/components/search-panel";
 
 type Tab =
-  | "overview"
+  | "home"
   | "actions"
+  | "actionBuilder"
+  | "rag"
   | "search"
   | "projects"
   | "datasets"
@@ -38,22 +41,76 @@ type Tab =
   | "integrations"
   | "backup";
 
-const tabs: { id: Tab; label: string }[] = [
-  { id: "overview", label: "Overview" },
-  { id: "actions", label: "Actions" },
-  { id: "search", label: "Search" },
-  { id: "projects", label: "Projects" },
-  { id: "datasets", label: "Datasets" },
-  { id: "businessRules", label: "Business Rules" },
-  { id: "promptTemplates", label: "Prompt Templates" },
-  { id: "memories", label: "Memories" },
-  { id: "knowledgeAssets", label: "Knowledge Assets" },
-  { id: "integrations", label: "Integrations" },
-  { id: "backup", label: "Backup" },
+const navGroups: { title: string; items: { id: Tab; label: string }[] }[] = [
+  {
+    title: "Start",
+    items: [
+      { id: "home", label: "Home" },
+      { id: "actions", label: "Run Actions" },
+      { id: "rag", label: "Ask Knowledge Base" },
+      { id: "search", label: "Search" },
+    ],
+  },
+  {
+    title: "Build",
+    items: [
+      { id: "projects", label: "Projects" },
+      { id: "datasets", label: "Datasets" },
+      { id: "businessRules", label: "Business Rules" },
+      { id: "actionBuilder", label: "Action Builder" },
+    ],
+  },
+  {
+    title: "Library",
+    items: [
+      { id: "promptTemplates", label: "Prompt Templates" },
+      { id: "memories", label: "Memories" },
+      { id: "knowledgeAssets", label: "Knowledge Assets" },
+    ],
+  },
+  {
+    title: "System",
+    items: [
+      { id: "integrations", label: "Integrations" },
+      { id: "backup", label: "Backup" },
+    ],
+  },
 ];
 
+const titleMap: Record<Tab, string> = {
+  home: "Home",
+  actions: "Run Actions",
+  actionBuilder: "Action Builder",
+  rag: "Ask Knowledge Base",
+  search: "Search",
+  projects: "Projects",
+  datasets: "Datasets",
+  businessRules: "Business Rules",
+  promptTemplates: "Prompt Templates",
+  memories: "Memories",
+  knowledgeAssets: "Knowledge Assets",
+  integrations: "Integrations",
+  backup: "Backup",
+};
+
+const subtitleMap: Record<Tab, string> = {
+  home: "Start here. Capture context, run actions, ask your documents, and preserve useful outputs.",
+  actions: "Run repeatable professional tasks using project context, dataset context, prompts, and Ollama.",
+  actionBuilder: "Create your own reusable task/action templates for AnalyticsOS.",
+  rag: "Ask AnythingLLM over your indexed knowledge base and save useful answers.",
+  search: "Search across projects, datasets, rules, prompts, memories, knowledge, and saved outputs.",
+  projects: "Track professional initiatives, analytics use cases, and delivery work.",
+  datasets: "Document files, tables, dashboards, notebooks, and other data assets.",
+  businessRules: "Store definitions and business logic that should not be lost.",
+  promptTemplates: "Reusable prompts for Claude, ChatGPT, NotebookLM, Ollama, and other tools.",
+  memories: "Approved durable context, decisions, preferences, and lessons.",
+  knowledgeAssets: "Markdown/text notes and saved outputs that AnalyticsOS can search.",
+  integrations: "Check Ollama, Obsidian, and AnythingLLM configuration.",
+  backup: "Export and import your local AnalyticsOS state.",
+};
+
 export function DashboardApp() {
-  const [activeTab, setActiveTab] = useState<Tab>("overview");
+  const [activeTab, setActiveTab] = useState<Tab>("home");
   const [config, setConfig] = useState<AppConfig | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
   const [datasets, setDatasets] = useState<Dataset[]>([]);
@@ -93,8 +150,6 @@ export function DashboardApp() {
     void refresh();
   }, []);
 
-  const title = activeTab === "overview" ? "Command center" : tabs.find((tab) => tab.id === activeTab)?.label;
-
   return (
     <main className="app-shell">
       <aside className="sidebar">
@@ -105,10 +160,19 @@ export function DashboardApp() {
         </div>
 
         <nav className="nav">
-          {tabs.map((tab) => (
-            <button className={`nav-button ${activeTab === tab.id ? "active" : ""}`} key={tab.id} onClick={() => setActiveTab(tab.id)}>
-              {tab.label}
-            </button>
+          {navGroups.map((group) => (
+            <div className="nav-group" key={group.title}>
+              <div className="nav-group-title">{group.title}</div>
+              {group.items.map((item) => (
+                <button
+                  className={`nav-button ${activeTab === item.id ? "active" : ""}`}
+                  key={item.id}
+                  onClick={() => setActiveTab(item.id)}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
           ))}
         </nav>
 
@@ -121,10 +185,8 @@ export function DashboardApp() {
         <header className="header">
           <div>
             <div className="eyebrow">Local-first Professional Intelligence</div>
-            <h1>{title}</h1>
-            <p className="subtitle">
-              Create, search, run professional actions, and connect local intelligence tools.
-            </p>
+            <h1>{titleMap[activeTab]}</h1>
+            <p className="subtitle">{subtitleMap[activeTab]}</p>
           </div>
           <div className="toolbar">
             <button className="button" onClick={() => void refresh()}>Refresh</button>
@@ -140,23 +202,26 @@ export function DashboardApp() {
           </section>
         ) : null}
 
-        {activeTab === "overview" ? (
-          <Overview
+        {activeTab === "home" ? (
+          <CommandCenterPanel
             businessRules={businessRules}
             datasets={datasets}
             knowledgeAssets={knowledgeAssets}
             memories={memories}
+            onSelectTab={setActiveTab}
             projects={projects}
             promptTemplates={promptTemplates}
           />
         ) : null}
 
         {activeTab === "actions" ? <ActionsPanel projects={projects} datasets={datasets} /> : null}
+        {activeTab === "actionBuilder" ? <ActionBuilderPanel /> : null}
+        {activeTab === "rag" ? <RagPanel /> : null}
         {activeTab === "search" ? <SearchPanel /> : null}
         {activeTab === "integrations" ? <IntegrationsPanel /> : null}
         {activeTab === "backup" ? <BackupPanel onRefresh={refresh} /> : null}
 
-        {activeTab !== "overview" && activeTab !== "actions" && activeTab !== "search" && activeTab !== "integrations" && activeTab !== "backup" ? (
+        {!["home", "actions", "actionBuilder", "rag", "search", "integrations", "backup"].includes(activeTab) ? (
           <ResourceManager
             businessRules={businessRules}
             datasets={datasets}
@@ -170,78 +235,5 @@ export function DashboardApp() {
         ) : null}
       </section>
     </main>
-  );
-}
-
-function Overview({
-  projects,
-  datasets,
-  businessRules,
-  promptTemplates,
-  memories,
-  knowledgeAssets,
-}: {
-  projects: Project[];
-  datasets: Dataset[];
-  businessRules: BusinessRule[];
-  promptTemplates: PromptTemplate[];
-  memories: Memory[];
-  knowledgeAssets: KnowledgeAsset[];
-}) {
-  const totalObjects =
-    projects.length + datasets.length + businessRules.length + promptTemplates.length + memories.length + knowledgeAssets.length;
-
-  const defaultLoop =
-    "Add project context → run an action → generate a prompt or Ollama output → export the result to Obsidian/Knowledge → search it later.";
-
-  const [smartLoop, setSmartLoop] = useState(defaultLoop);
-
-  useEffect(() => {
-    const stored = window.localStorage.getItem("analyticsos-smart-loop");
-    if (stored) {
-      setSmartLoop(stored);
-    }
-  }, []);
-
-  function saveSmartLoop(value: string) {
-    setSmartLoop(value);
-    window.localStorage.setItem("analyticsos-smart-loop", value);
-  }
-
-  return (
-    <section className="grid">
-      <DashboardCard title="Objects" count={totalObjects} description="Total tracked professional objects." className="span-3" />
-      <DashboardCard title="Projects" count={projects.length} description="Professional initiatives." className="span-3" />
-      <DashboardCard title="Actions" description="Professional tasks the AI can execute." className="span-3" />
-      <DashboardCard title="Knowledge" count={knowledgeAssets.length} description="Local knowledge assets." className="span-3" />
-
-      <DashboardCard title="Smart system loop" className="span-12">
-        <textarea
-          className="editable-loop"
-          value={smartLoop}
-          onChange={(event) => saveSmartLoop(event.target.value)}
-          aria-label="Editable smart system loop"
-        />
-        <p>This is now editable and saved locally in your browser.</p>
-      </DashboardCard>
-
-      <DashboardCard title="Recent Projects" className="span-6">
-        <ObjectList emptyText="No projects found." items={projects.map((project) => ({
-          id: project.id,
-          title: project.name,
-          description: project.description,
-          meta: `${project.status} · ${project.function} · ${project.owner}`,
-        }))} />
-      </DashboardCard>
-
-      <DashboardCard title="Prompt Templates" className="span-6">
-        <ObjectList emptyText="No prompt templates found." items={promptTemplates.map((template) => ({
-          id: template.id,
-          title: template.name,
-          description: template.description,
-          meta: `${template.template_type} · ${template.target_tool}`,
-        }))} />
-      </DashboardCard>
-    </section>
   );
 }

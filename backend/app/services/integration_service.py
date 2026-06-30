@@ -2,6 +2,7 @@ from pathlib import Path
 
 from app.core.config import settings
 from app.domain.integrations import IntegrationStatus, IntegrationStatusPayload
+from app.services.anythingllm_service import status as anythingllm_status
 from app.services.ollama_service import check_ollama
 
 
@@ -15,7 +16,7 @@ def get_integration_status() -> IntegrationStatusPayload:
         else False
     )
 
-    anything_configured = bool(settings.anythingllm_base_url.strip())
+    anything = anythingllm_status()
 
     return IntegrationStatusPayload(
         ollama=IntegrationStatus(
@@ -36,12 +37,8 @@ def get_integration_status() -> IntegrationStatusPayload:
         ),
         anythingllm=IntegrationStatus(
             name="AnythingLLM",
-            configured=anything_configured,
-            available=False,
-            details=(
-                "AnythingLLM base URL is configured. Query integration comes next."
-                if anything_configured
-                else "Set ANALYTICSOS_ANYTHINGLLM_BASE_URL to enable AnythingLLM."
-            ),
+            configured=bool(anything.get("configured")),
+            available=bool(anything.get("available")),
+            details=str(anything.get("details", "")),
         ),
     )

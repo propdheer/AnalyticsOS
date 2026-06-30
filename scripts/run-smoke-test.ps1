@@ -17,6 +17,7 @@ $endpoints = @(
     "http://127.0.0.1:8000/api/v1/ai/status",
     "http://127.0.0.1:8000/api/v1/ai/models",
     "http://127.0.0.1:8000/api/v1/integrations/status",
+    "http://127.0.0.1:8000/api/v1/rag/status",
     "http://127.0.0.1:8000/api/v1/search?q=AnalyticsOS",
     "http://127.0.0.1:8000/api/v1/backup/export"
 )

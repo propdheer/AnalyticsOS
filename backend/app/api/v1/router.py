@@ -13,6 +13,7 @@ from app.api.v1.routes import (
     obsidian,
     projects,
     prompt_templates,
+    rag,
     search,
 )
 
@@ -30,3 +31,4 @@ api_router.include_router(actions.router, prefix="/actions", tags=["actions"])
 api_router.include_router(ai.router, prefix="/ai", tags=["ai"])
 api_router.include_router(integrations.router, prefix="/integrations", tags=["integrations"])
 api_router.include_router(obsidian.router, prefix="/obsidian", tags=["obsidian"])
+api_router.include_router(rag.router, prefix="/rag", tags=["rag"])
