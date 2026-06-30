@@ -1,33 +1,20 @@
 # AnalyticsOS Roadmap
 
-## Completed MVP Foundation
+## Completed
 
-### v0.1.x
-- Backend object APIs
-- Dashboard MVP
-- Configured dashboard CRUD
-- Knowledge assets
-- Global search
+### v0.3.2-alpha
+- Action run history.
+- Save action output as Knowledge Asset.
+- Open previous action runs.
 
-### v0.2.0-alpha
-- Backup and restore
-- Smoke test script
-- MVP closure checklist
-- First usable local product candidate
+## Next
 
-## Next Phase
+### v0.3.3-alpha — AnythingLLM Query Integration
+- AnythingLLM workspace config.
+- Query workspace endpoint.
+- Source-aware RAG answers.
 
-### v0.2.1-alpha — Edit and Detail Views
-- Object detail views
-- Edit forms
-- Safer validation
-
-### v0.3.0-alpha — PostgreSQL Persistence
-- SQLAlchemy models
-- PostgreSQL-backed repositories
-- Alembic migrations
-
-### v0.4.0-alpha — Knowledge Intelligence
-- File ingestion pipeline
-- Better parsing
-- Embeddings and semantic search
+### v0.3.4-alpha — Action Builder
+- Create custom actions from the UI.
+- Edit action templates.
+- Categorize actions.

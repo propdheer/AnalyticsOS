@@ -4,13 +4,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.v1.router import api_router
 from app.core.config import settings
 
-APP_VERSION = "0.2.0-alpha"
+APP_VERSION = "0.3.2-alpha"
 
-app = FastAPI(
-    title="AnalyticsOS API",
-    version=APP_VERSION,
-    description="Backend API for AnalyticsOS.",
-)
+app = FastAPI(title="AnalyticsOS API", version=APP_VERSION, description="Backend API for AnalyticsOS.")
 
 app.add_middleware(
     CORSMiddleware,
@@ -22,28 +18,14 @@ app.add_middleware(
 
 app.include_router(api_router)
 
-
 @app.get("/")
 def root() -> dict[str, str]:
-    return {
-        "name": "AnalyticsOS API",
-        "version": APP_VERSION,
-        "status": "running",
-    }
-
+    return {"name": "AnalyticsOS API", "version": APP_VERSION, "status": "running"}
 
 @app.get("/health")
 def health() -> dict[str, str]:
-    return {
-        "status": "healthy",
-        "environment": settings.environment,
-    }
-
+    return {"status": "healthy", "environment": settings.environment}
 
 @app.get("/version")
 def version() -> dict[str, str]:
-    return {
-        "name": "AnalyticsOS",
-        "api_version": APP_VERSION,
-        "environment": settings.environment,
-    }
+    return {"name": "AnalyticsOS", "api_version": APP_VERSION, "environment": settings.environment}

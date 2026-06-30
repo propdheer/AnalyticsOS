@@ -2,63 +2,32 @@
 
 **Build Once. Learn Forever.**
 
-AnalyticsOS is a local-first Professional Intelligence Platform for professional memory, project knowledge, local search, and AI-assisted analytical workflows.
-
 ## Current Status
 
 | Field | Value |
 |---|---|
-| Version | `v0.2.0-alpha` |
-| Milestone | First Usable Local Product |
-| Status | MVP closure candidate |
+| Version | `v0.3.2-alpha` |
+| Milestone | Action History and Output Knowledge |
+| Status | In development |
 
-## Current Capabilities
+## v0.3.2-alpha Adds
 
-AnalyticsOS currently supports:
-
-- Dashboard-based object management
-- Projects
-- Datasets
-- Business Rules
-- Prompt Templates
-- Memories
-- Knowledge Assets
-- Local markdown/text knowledge discovery
-- Global search
-- Backup export/import
+- Sidebar scroll and footer UX fix from `v0.3.1-alpha`.
+- Editable smart system loop from `v0.3.1-alpha`.
+- Ollama downloaded model picker from `v0.3.1-alpha`.
+- Action run history.
+- Open previous action runs.
+- Save action output as Knowledge Asset.
+- Backend action run persistence.
 
 ## Run Backend
 
 ```powershell
-.\scripts\run-backend.ps1
+.\scriptsun-backend.ps1
 ```
 
 ## Run Frontend
 
 ```powershell
-.\scripts\run-frontend.ps1
-```
-
-Open:
-
-```text
-http://localhost:3000
-```
-
-## Validate MVP
-
-```powershell
-.\scripts\test-backend.ps1
-```
-
-With backend running:
-
-```powershell
-.\scripts\run-smoke-test.ps1
-```
-
-See:
-
-```text
-docs/mvp-closure-checklist.md
+.\scriptsun-frontend.ps1
 ```

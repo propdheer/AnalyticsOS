@@ -21,6 +21,7 @@ nav:
       - Backup and Restore: docs/backup-restore.md
       - Dashboard MVP: docs/dashboard-mvp.md
       - Knowledge Indexing: docs/knowledge-indexing.md
+      - Smart System: docs/smart-system.md
   - Handbook:
       - Product:
           - Overview: handbook/volume-1-product/README.md

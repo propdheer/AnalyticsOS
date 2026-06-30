@@ -12,6 +12,11 @@ $endpoints = @(
     "http://127.0.0.1:8000/api/v1/prompt-templates",
     "http://127.0.0.1:8000/api/v1/memories",
     "http://127.0.0.1:8000/api/v1/knowledge-assets",
+    "http://127.0.0.1:8000/api/v1/actions",
+    "http://127.0.0.1:8000/api/v1/actions/runs",
+    "http://127.0.0.1:8000/api/v1/ai/status",
+    "http://127.0.0.1:8000/api/v1/ai/models",
+    "http://127.0.0.1:8000/api/v1/integrations/status",
     "http://127.0.0.1:8000/api/v1/search?q=AnalyticsOS",
     "http://127.0.0.1:8000/api/v1/backup/export"
 )

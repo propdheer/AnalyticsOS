@@ -17,14 +17,17 @@ import {
   getProjects,
   getPromptTemplates,
 } from "@/lib/api";
+import { ActionsPanel } from "@/components/actions-panel";
 import { BackupPanel } from "@/components/backup-panel";
 import { DashboardCard } from "@/components/dashboard-card";
+import { IntegrationsPanel } from "@/components/integrations-panel";
 import { ObjectList } from "@/components/object-list";
 import { ResourceManager } from "@/components/resource-manager";
 import { SearchPanel } from "@/components/search-panel";
 
 type Tab =
   | "overview"
+  | "actions"
   | "search"
   | "projects"
   | "datasets"
@@ -32,10 +35,12 @@ type Tab =
   | "promptTemplates"
   | "memories"
   | "knowledgeAssets"
+  | "integrations"
   | "backup";
 
 const tabs: { id: Tab; label: string }[] = [
   { id: "overview", label: "Overview" },
+  { id: "actions", label: "Actions" },
   { id: "search", label: "Search" },
   { id: "projects", label: "Projects" },
   { id: "datasets", label: "Datasets" },
@@ -43,6 +48,7 @@ const tabs: { id: Tab; label: string }[] = [
   { id: "promptTemplates", label: "Prompt Templates" },
   { id: "memories", label: "Memories" },
   { id: "knowledgeAssets", label: "Knowledge Assets" },
+  { id: "integrations", label: "Integrations" },
   { id: "backup", label: "Backup" },
 ];
 
@@ -117,7 +123,7 @@ export function DashboardApp() {
             <div className="eyebrow">Local-first Professional Intelligence</div>
             <h1>{title}</h1>
             <p className="subtitle">
-              Create, search, backup, and manage the professional objects that make AnalyticsOS useful.
+              Create, search, run professional actions, and connect local intelligence tools.
             </p>
           </div>
           <div className="toolbar">
@@ -145,10 +151,12 @@ export function DashboardApp() {
           />
         ) : null}
 
+        {activeTab === "actions" ? <ActionsPanel projects={projects} datasets={datasets} /> : null}
         {activeTab === "search" ? <SearchPanel /> : null}
+        {activeTab === "integrations" ? <IntegrationsPanel /> : null}
         {activeTab === "backup" ? <BackupPanel onRefresh={refresh} /> : null}
 
-        {activeTab !== "overview" && activeTab !== "search" && activeTab !== "backup" ? (
+        {activeTab !== "overview" && activeTab !== "actions" && activeTab !== "search" && activeTab !== "integrations" && activeTab !== "backup" ? (
           <ResourceManager
             businessRules={businessRules}
             datasets={datasets}
@@ -183,17 +191,38 @@ function Overview({
   const totalObjects =
     projects.length + datasets.length + businessRules.length + promptTemplates.length + memories.length + knowledgeAssets.length;
 
+  const defaultLoop =
+    "Add project context → run an action → generate a prompt or Ollama output → export the result to Obsidian/Knowledge → search it later.";
+
+  const [smartLoop, setSmartLoop] = useState(defaultLoop);
+
+  useEffect(() => {
+    const stored = window.localStorage.getItem("analyticsos-smart-loop");
+    if (stored) {
+      setSmartLoop(stored);
+    }
+  }, []);
+
+  function saveSmartLoop(value: string) {
+    setSmartLoop(value);
+    window.localStorage.setItem("analyticsos-smart-loop", value);
+  }
+
   return (
     <section className="grid">
       <DashboardCard title="Objects" count={totalObjects} description="Total tracked professional objects." className="span-3" />
       <DashboardCard title="Projects" count={projects.length} description="Professional initiatives." className="span-3" />
+      <DashboardCard title="Actions" description="Professional tasks the AI can execute." className="span-3" />
       <DashboardCard title="Knowledge" count={knowledgeAssets.length} description="Local knowledge assets." className="span-3" />
-      <DashboardCard title="Memories" count={memories.length} description="Durable context." className="span-3" />
 
-      <DashboardCard title="MVP closure checklist" className="span-12">
-        <div className="notice">
-          Create one real object, search for it, export a backup, refresh the page, and confirm it persists.
-        </div>
+      <DashboardCard title="Smart system loop" className="span-12">
+        <textarea
+          className="editable-loop"
+          value={smartLoop}
+          onChange={(event) => saveSmartLoop(event.target.value)}
+          aria-label="Editable smart system loop"
+        />
+        <p>This is now editable and saved locally in your browser.</p>
       </DashboardCard>
 
       <DashboardCard title="Recent Projects" className="span-6">
@@ -205,13 +234,12 @@ function Overview({
         }))} />
       </DashboardCard>
 
-      <DashboardCard title="Knowledge Assets" className="span-6">
-        <ObjectList emptyText="No knowledge assets found." items={knowledgeAssets.map((asset) => ({
-          id: asset.id,
-          title: asset.title,
-          description: asset.summary,
-          meta: asset.path,
-          badge: asset.tags.join(", "),
+      <DashboardCard title="Prompt Templates" className="span-6">
+        <ObjectList emptyText="No prompt templates found." items={promptTemplates.map((template) => ({
+          id: template.id,
+          title: template.name,
+          description: template.description,
+          meta: `${template.template_type} · ${template.target_tool}`,
         }))} />
       </DashboardCard>
     </section>
