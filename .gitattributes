@@ -1,0 +1,17 @@
+# AnalyticsOS line ending policy
+* text=auto eol=lf
+
+*.ps1 text eol=crlf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.pbix binary
+*.xlsx binary
+*.xlsm binary
+*.pptx binary
+*.docx binary

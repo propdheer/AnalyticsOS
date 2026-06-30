@@ -10,17 +10,26 @@ It is not a chatbot. It is an operating system for professional memory, project 
 
 | Field | Value |
 |---|---|
-| Version | `v0.0.3-alpha` |
+| Version | `v0.0.7-alpha` |
 | Sprint | Sprint 0 |
-| Milestone | Repository Foundation Patch |
+| Milestone | Product + Architecture + Core API Foundation |
 | Status | In development |
+
+## Product Foundation
+
+Core documents:
+
+- `FOUNDING.md`
+- `PRODUCT_SPECIFICATION.md`
+- `ARCHITECTURE.md`
+- `handbook/volume-1-product/`
+- `handbook/volume-2-architecture/`
 
 ## Development Quick Start
 
 ```powershell
 cd "C:\Users\Dheer.Madhusudan\OneDrive - Sundrop Brands Limited\Desktop\AnalyticsOS"
 .\.venv\Scripts\Activate.ps1
-python --version
 ```
 
 Install dependencies:
@@ -41,12 +50,20 @@ Run tests:
 .\scripts\test-backend.ps1
 ```
 
+Run quality checks:
+
+```powershell
+.\scripts\run-quality.ps1
+```
+
 ## Backend Endpoints
 
 ```text
 http://127.0.0.1:8000/
 http://127.0.0.1:8000/health
 http://127.0.0.1:8000/version
+http://127.0.0.1:8000/api/v1/projects
+http://127.0.0.1:8000/api/v1/datasets
 ```
 
 ## Repository Layout

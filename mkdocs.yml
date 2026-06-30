@@ -14,12 +14,21 @@ nav:
   - Home: docs/index.md
   - Development:
       - Windows Setup: docs/development-windows.md
+      - API Smoke Tests: docs/api-smoke-tests.md
   - Handbook:
       - Product:
+          - Overview: handbook/volume-1-product/README.md
           - Welcome: handbook/volume-1-product/00-welcome.md
           - Manifesto: handbook/volume-1-product/01-manifesto.md
+          - Guiding Principles: handbook/volume-1-product/02-guiding-principles.md
+          - Personas: handbook/volume-1-product/03-personas.md
+          - Use Cases: handbook/volume-1-product/04-use-cases.md
+          - Glossary: handbook/volume-1-product/05-glossary.md
       - Architecture:
           - Overview: handbook/volume-2-architecture/00-overview.md
+          - System Context: handbook/volume-2-architecture/01-system-context.md
+          - Domain Model: handbook/volume-2-architecture/02-domain-model.md
+          - API Principles: handbook/volume-2-architecture/03-api-principles.md
   - ADRs:
       - ADR Index: adr/README.md
   - RFCs:

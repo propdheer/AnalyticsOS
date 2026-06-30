@@ -4,6 +4,47 @@ All notable changes to AnalyticsOS will be documented in this file.
 
 This project follows semantic versioning.
 
+## [0.0.7-alpha] - 2026-06-30
+
+### Added
+- Project and Dataset domain models.
+- `/api/v1/projects` endpoint.
+- `/api/v1/datasets` endpoint.
+- API tests for Projects and Datasets.
+- `run-quality.ps1` developer workflow script.
+- API smoke test documentation.
+
+## [0.0.6-alpha] - 2026-06-30
+
+### Added
+- Initial backend domain layer.
+- Initial service layer pattern.
+- API v1 router structure.
+
+## [0.0.5-alpha] - 2026-06-30
+
+### Added
+- Architecture overview.
+- System context documentation.
+- Domain model documentation.
+- API principles documentation.
+- ADR-004 API-first backend.
+- ADR-005 Canonical domain objects.
+
+## [0.0.4-alpha] - 2026-06-30
+
+### Added
+- Founding document.
+- Product specification.
+- Guiding principles.
+- Personas.
+- Use cases.
+- Product glossary.
+- `.gitattributes` for consistent line endings.
+
+### Changed
+- Updated MkDocs navigation for Product Handbook volume.
+
 ## [0.0.3-alpha] - 2026-06-30
 
 ### Added
