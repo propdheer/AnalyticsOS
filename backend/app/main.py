@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.v1.router import api_router
 from app.core.config import settings
 
-APP_VERSION = "0.1.5-alpha"
+APP_VERSION = "0.2.0-alpha"
 
 app = FastAPI(
     title="AnalyticsOS API",

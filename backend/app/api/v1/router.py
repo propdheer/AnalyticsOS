@@ -2,6 +2,7 @@ from fastapi import APIRouter
 
 from app.api.v1.routes import (
     app_config,
+    backup,
     business_rules,
     datasets,
     knowledge_assets,
@@ -20,3 +21,4 @@ api_router.include_router(prompt_templates.router, prefix="/prompt-templates", t
 api_router.include_router(memories.router, prefix="/memories", tags=["memories"])
 api_router.include_router(knowledge_assets.router, prefix="/knowledge-assets", tags=["knowledge-assets"])
 api_router.include_router(search.router, prefix="/search", tags=["search"])
+api_router.include_router(backup.router, prefix="/backup", tags=["backup"])

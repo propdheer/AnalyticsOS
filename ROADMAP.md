@@ -1,27 +1,33 @@
 # AnalyticsOS Roadmap
 
-## Current
+## Completed MVP Foundation
 
-### v0.1.5-alpha
+### v0.1.x
+- Backend object APIs
+- Dashboard MVP
+- Configured dashboard CRUD
+- Knowledge assets
 - Global search
-- App config endpoint
-- Knowledge Assets tab
-- Local markdown/text knowledge discovery
 
-## Next
+### v0.2.0-alpha
+- Backup and restore
+- Smoke test script
+- MVP closure checklist
+- First usable local product candidate
 
-### v0.1.6-alpha — Edit and Detail Views
-- Object detail pages
+## Next Phase
+
+### v0.2.1-alpha — Edit and Detail Views
+- Object detail views
 - Edit forms
-- Better validation
+- Safer validation
 
-### v0.1.7-alpha — PostgreSQL Persistence
+### v0.3.0-alpha — PostgreSQL Persistence
 - SQLAlchemy models
 - PostgreSQL-backed repositories
-- Migration foundation
+- Alembic migrations
 
-### v0.2.0-alpha — Useful Local Product
-- Dashboard-first experience
-- Persistent professional objects
-- Local knowledge search
-- Prompt generation workflows
+### v0.4.0-alpha — Knowledge Intelligence
+- File ingestion pipeline
+- Better parsing
+- Embeddings and semantic search
