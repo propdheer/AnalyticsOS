@@ -9,16 +9,7 @@ class Settings(BaseSettings):
     api_port: int = 8000
 
     # Runtime paths are configurable per machine.
-    #
-    # Office laptop example:
-    #   ANALYTICSOS_DATA_DIR=C:\Users\...\OneDrive - ...\AnalyticsOS-runtime\data
-    #   ANALYTICSOS_KNOWLEDGE_DIR=C:\Users\...\OneDrive - ...\AnalyticsOS-runtime\knowledge
-    #
-    # Personal laptop example:
-    #   ANALYTICSOS_DATA_DIR=%LOCALAPPDATA%\AnalyticsOS\data
-    #   ANALYTICSOS_KNOWLEDGE_DIR=%LOCALAPPDATA%\AnalyticsOS\knowledge
-    #
-    # Defaults remain repo-relative for continuity with earlier versions.
+    # If omitted, AnalyticsOS keeps the earlier repo-relative defaults.
     data_dir: str = "../data"
     knowledge_dir: str = "../knowledge"
     sync_dir: str = ""

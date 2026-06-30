@@ -2,16 +2,20 @@
 
 import { useEffect, useState } from "react";
 import {
+  ActionTemplate,
   AppConfig,
   BusinessRule,
   Dataset,
+  IntegrationStatusPayload,
   KnowledgeAsset,
   Memory,
   Project,
   PromptTemplate,
+  getActions,
   getAppConfig,
   getBusinessRules,
   getDatasets,
+  getIntegrationStatus,
   getKnowledgeAssets,
   getMemories,
   getProjects,
@@ -21,17 +25,25 @@ import { ActionBuilderPanel } from "@/components/action-builder-panel";
 import { ActionsPanel } from "@/components/actions-panel";
 import { BackupPanel } from "@/components/backup-panel";
 import { CommandCenterPanel } from "@/components/command-center-panel";
+import { CommandPalette } from "@/components/command-palette";
 import { IntegrationsPanel } from "@/components/integrations-panel";
+import { OllamaChatPanel } from "@/components/ollama-chat-panel";
+import { QuickCapturePanel } from "@/components/quick-capture-panel";
 import { RagPanel } from "@/components/rag-panel";
 import { ResourceManager } from "@/components/resource-manager";
 import { SearchPanel } from "@/components/search-panel";
+import { SettingsPanel } from "@/components/settings-panel";
+import { tabId } from "@/lib/format";
 
 type Tab =
+  | "chat"
   | "home"
   | "actions"
   | "actionBuilder"
   | "rag"
   | "search"
+  | "quickCapture"
+  | "settings"
   | "projects"
   | "datasets"
   | "businessRules"
@@ -45,24 +57,26 @@ const navGroups: { title: string; items: { id: Tab; label: string }[] }[] = [
   {
     title: "Start",
     items: [
+      { id: "chat", label: "Chat" },
       { id: "home", label: "Home" },
+      { id: "quickCapture", label: "Quick Capture" },
+      { id: "search", label: "Search" },
+    ],
+  },
+  {
+    title: "Work",
+    items: [
       { id: "actions", label: "Run Actions" },
       { id: "rag", label: "Ask Knowledge Base" },
-      { id: "search", label: "Search" },
+      { id: "projects", label: "Projects" },
+      { id: "datasets", label: "Datasets" },
+      { id: "businessRules", label: "Business Rules" },
     ],
   },
   {
     title: "Build",
     items: [
-      { id: "projects", label: "Projects" },
-      { id: "datasets", label: "Datasets" },
-      { id: "businessRules", label: "Business Rules" },
       { id: "actionBuilder", label: "Action Builder" },
-    ],
-  },
-  {
-    title: "Library",
-    items: [
       { id: "promptTemplates", label: "Prompt Templates" },
       { id: "memories", label: "Memories" },
       { id: "knowledgeAssets", label: "Knowledge Assets" },
@@ -71,6 +85,7 @@ const navGroups: { title: string; items: { id: Tab; label: string }[] }[] = [
   {
     title: "System",
     items: [
+      { id: "settings", label: "Settings" },
       { id: "integrations", label: "Integrations" },
       { id: "backup", label: "Backup" },
     ],
@@ -78,11 +93,14 @@ const navGroups: { title: string; items: { id: Tab; label: string }[] }[] = [
 ];
 
 const titleMap: Record<Tab, string> = {
+  chat: "Chat with Ollama",
   home: "Home",
+  quickCapture: "Quick Capture",
   actions: "Run Actions",
   actionBuilder: "Action Builder",
   rag: "Ask Knowledge Base",
   search: "Search",
+  settings: "Settings",
   projects: "Projects",
   datasets: "Datasets",
   businessRules: "Business Rules",
@@ -94,11 +112,14 @@ const titleMap: Record<Tab, string> = {
 };
 
 const subtitleMap: Record<Tab, string> = {
-  home: "Start here. Capture context, run actions, ask your documents, and preserve useful outputs.",
+  chat: "Talk to your local Ollama model with optional access to AnalyticsOS knowledge context.",
+  home: "Capture context, run actions, ask your documents, and preserve useful outputs.",
+  quickCapture: "Save a thought, decision, note, or reusable knowledge item in seconds.",
   actions: "Run repeatable professional tasks using project context, dataset context, prompts, and Ollama.",
-  actionBuilder: "Create your own reusable task/action templates for AnalyticsOS.",
+  actionBuilder: "Create your own reusable task/action templates with live prompt preview.",
   rag: "Ask AnythingLLM over your indexed knowledge base and save useful answers.",
   search: "Search across projects, datasets, rules, prompts, memories, knowledge, and saved outputs.",
+  settings: "Configure runtime paths and integrations without manually editing .env on each laptop.",
   projects: "Track professional initiatives, analytics use cases, and delivery work.",
   datasets: "Document files, tables, dashboards, notebooks, and other data assets.",
   businessRules: "Store definitions and business logic that should not be lost.",
@@ -110,7 +131,8 @@ const subtitleMap: Record<Tab, string> = {
 };
 
 export function DashboardApp() {
-  const [activeTab, setActiveTab] = useState<Tab>("home");
+  const [activeTab, setActiveTab] = useState<Tab>("chat");
+  const [collapsedGroups, setCollapsedGroups] = useState<Record<string, boolean>>({});
   const [config, setConfig] = useState<AppConfig | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
   const [datasets, setDatasets] = useState<Dataset[]>([]);
@@ -118,12 +140,14 @@ export function DashboardApp() {
   const [promptTemplates, setPromptTemplates] = useState<PromptTemplate[]>([]);
   const [memories, setMemories] = useState<Memory[]>([]);
   const [knowledgeAssets, setKnowledgeAssets] = useState<KnowledgeAsset[]>([]);
+  const [actions, setActions] = useState<ActionTemplate[]>([]);
+  const [integrationStatus, setIntegrationStatus] = useState<IntegrationStatusPayload | null>(null);
   const [error, setError] = useState("");
 
   async function refresh() {
     setError("");
     try {
-      const [configData, projectData, datasetData, ruleData, templateData, memoryData, assetData] =
+      const [configData, projectData, datasetData, ruleData, templateData, memoryData, assetData, actionData, integrationData] =
         await Promise.all([
           getAppConfig(),
           getProjects(),
@@ -132,6 +156,8 @@ export function DashboardApp() {
           getPromptTemplates(),
           getMemories(),
           getKnowledgeAssets(),
+          getActions(),
+          getIntegrationStatus(),
         ]);
 
       setConfig(configData);
@@ -141,6 +167,8 @@ export function DashboardApp() {
       setPromptTemplates(templateData);
       setMemories(memoryData);
       setKnowledgeAssets(assetData);
+      setActions(actionData);
+      setIntegrationStatus(integrationData);
     } catch (caughtError) {
       setError(caughtError instanceof Error ? caughtError.message : "Could not connect to backend.");
     }
@@ -150,41 +178,62 @@ export function DashboardApp() {
     void refresh();
   }, []);
 
+  function toggleGroup(title: string) {
+    setCollapsedGroups((current) => ({ ...current, [title]: !current[title] }));
+  }
+
   return (
     <main className="app-shell">
+      <CommandPalette actions={actions} projects={projects} onSelectTab={setActiveTab} />
+
       <aside className="sidebar">
-        <div className="brand">
-          <div className="brand-mark">A</div>
-          <div className="brand-title">{config?.app_name ?? "AnalyticsOS"}</div>
-          <div className="brand-subtitle">{config?.tagline ?? "Build Once. Learn Forever."}</div>
+        <div className="brand compact">
+          <div className="brand-row">
+            <div className="brand-mark">A</div>
+            <div>
+              <div className="brand-title">{config?.app_name ?? "AnalyticsOS"}</div>
+              <div className="brand-subtitle">Build Once. Learn Forever.</div>
+            </div>
+          </div>
         </div>
 
         <nav className="nav">
-          {navGroups.map((group) => (
-            <div className="nav-group" key={group.title}>
-              <div className="nav-group-title">{group.title}</div>
-              {group.items.map((item) => (
-                <button
-                  className={`nav-button ${activeTab === item.id ? "active" : ""}`}
-                  key={item.id}
-                  onClick={() => setActiveTab(item.id)}
-                >
-                  {item.label}
+          {navGroups.map((group) => {
+            const collapsed = collapsedGroups[group.title] ?? false;
+            return (
+              <div className="nav-group" key={group.title}>
+                <button className="nav-group-toggle" onClick={() => toggleGroup(group.title)}>
+                  <span>{group.title}</span>
+                  <span>{collapsed ? "›" : "⌄"}</span>
                 </button>
-              ))}
-            </div>
-          ))}
+                {!collapsed ? (
+                  <div className="nav-group-items">
+                    {group.items.map((item) => (
+                      <button
+                        className={`nav-button ${activeTab === item.id ? "active" : ""}`}
+                        key={item.id}
+                        onClick={() => setActiveTab(item.id)}
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            );
+          })}
         </nav>
 
         <div className="sidebar-footer">
-          Backend: {config ? `${config.api_version} · ${config.environment}` : "checking..."}
+          <span>{config ? config.api_version : "Checking..."}</span>
+          <span>Ctrl+K</span>
         </div>
       </aside>
 
       <section className="main">
         <header className="header">
           <div>
-            <div className="eyebrow">Local-first Professional Intelligence</div>
+            <div className="page-id">{tabId(activeTab)}</div>
             <h1>{titleMap[activeTab]}</h1>
             <p className="subtitle">{subtitleMap[activeTab]}</p>
           </div>
@@ -202,10 +251,13 @@ export function DashboardApp() {
           </section>
         ) : null}
 
+        {activeTab === "chat" ? <OllamaChatPanel /> : null}
+
         {activeTab === "home" ? (
           <CommandCenterPanel
             businessRules={businessRules}
             datasets={datasets}
+            integrationStatus={integrationStatus}
             knowledgeAssets={knowledgeAssets}
             memories={memories}
             onSelectTab={setActiveTab}
@@ -214,14 +266,16 @@ export function DashboardApp() {
           />
         ) : null}
 
+        {activeTab === "quickCapture" ? <QuickCapturePanel /> : null}
         {activeTab === "actions" ? <ActionsPanel projects={projects} datasets={datasets} /> : null}
         {activeTab === "actionBuilder" ? <ActionBuilderPanel /> : null}
         {activeTab === "rag" ? <RagPanel /> : null}
         {activeTab === "search" ? <SearchPanel /> : null}
+        {activeTab === "settings" ? <SettingsPanel /> : null}
         {activeTab === "integrations" ? <IntegrationsPanel /> : null}
         {activeTab === "backup" ? <BackupPanel onRefresh={refresh} /> : null}
 
-        {!["home", "actions", "actionBuilder", "rag", "search", "integrations", "backup"].includes(activeTab) ? (
+        {!["chat", "home", "quickCapture", "actions", "actionBuilder", "rag", "search", "settings", "integrations", "backup"].includes(activeTab) ? (
           <ResourceManager
             businessRules={businessRules}
             datasets={datasets}

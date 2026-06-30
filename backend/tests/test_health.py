@@ -14,4 +14,4 @@ def test_health_endpoint() -> None:
 def test_version_endpoint() -> None:
     response = client.get("/version")
     assert response.status_code == 200
-    assert response.json()["api_version"] == "0.4.1-alpha"
+    assert response.json()["api_version"] == "0.5.1-alpha"

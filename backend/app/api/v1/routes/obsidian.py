@@ -7,5 +7,5 @@ router = APIRouter()
 
 
 @router.post("/export")
-def post_obsidian_export(payload: ObsidianExportRequest) -> ObsidianExportResult:
+def post_export(payload: ObsidianExportRequest) -> ObsidianExportResult:
     return export_to_obsidian(payload)

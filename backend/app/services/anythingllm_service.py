@@ -4,33 +4,40 @@ import json
 import urllib.error
 import urllib.request
 
-from app.core.config import settings
 from app.domain.rag import RagQueryRequest, RagQueryResult
+from app.services.app_settings_service import (
+    effective_anythingllm_api_key,
+    effective_anythingllm_base_url,
+    effective_anythingllm_workspace_slug,
+)
 
 
 def is_configured() -> bool:
-    return bool(settings.anythingllm_base_url.strip() and settings.anythingllm_api_key.strip())
+    return bool(effective_anythingllm_base_url().strip() and effective_anythingllm_api_key().strip())
 
 
 def status() -> dict:
-    if not settings.anythingllm_base_url.strip():
+    base_url = effective_anythingllm_base_url()
+    api_key = effective_anythingllm_api_key()
+
+    if not base_url.strip():
         return {
             "configured": False,
             "available": False,
-            "details": "Set ANALYTICSOS_ANYTHINGLLM_BASE_URL to enable AnythingLLM.",
+            "details": "Set AnythingLLM Base URL in Settings.",
         }
 
-    if not settings.anythingllm_api_key.strip():
+    if not api_key.strip():
         return {
             "configured": False,
             "available": False,
-            "details": "Set ANALYTICSOS_ANYTHINGLLM_API_KEY to enable AnythingLLM API calls.",
+            "details": "Set AnythingLLM API key in Settings.",
         }
 
     try:
         request = urllib.request.Request(
-            f"{settings.anythingllm_base_url.rstrip('/')}/api/v1/auth",
-            headers={"Authorization": f"Bearer {settings.anythingllm_api_key}"},
+            f"{base_url.rstrip('/')}/api/v1/auth",
+            headers={"Authorization": f"Bearer {api_key}"},
             method="GET",
         )
         with urllib.request.urlopen(request, timeout=3) as response:
@@ -49,13 +56,15 @@ def status() -> dict:
 
 def query_workspace(payload: RagQueryRequest) -> RagQueryResult:
     if not is_configured():
-        raise RuntimeError("AnythingLLM is not configured. Add base URL, API key, and workspace slug in .env.")
+        raise RuntimeError("AnythingLLM is not configured. Add base URL, API key, and workspace slug in Settings.")
 
-    workspace_slug = payload.workspace_slug or settings.anythingllm_workspace_slug
+    base_url = effective_anythingllm_base_url()
+    api_key = effective_anythingllm_api_key()
+    workspace_slug = payload.workspace_slug or effective_anythingllm_workspace_slug()
     if not workspace_slug:
         raise RuntimeError("AnythingLLM workspace slug is required.")
 
-    url = f"{settings.anythingllm_base_url.rstrip('/')}/api/v1/workspace/{workspace_slug}/chat"
+    url = f"{base_url.rstrip('/')}/api/v1/workspace/{workspace_slug}/chat"
     body = json.dumps(
         {
             "message": payload.question,
@@ -68,7 +77,7 @@ def query_workspace(payload: RagQueryRequest) -> RagQueryResult:
         url,
         data=body,
         headers={
-            "Authorization": f"Bearer {settings.anythingllm_api_key}",
+            "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
             "Accept": "application/json",
         },

@@ -6,6 +6,7 @@ from app.api.v1.routes import (
     app_config,
     backup,
     business_rules,
+    chat,
     datasets,
     integrations,
     knowledge_assets,
@@ -13,8 +14,10 @@ from app.api.v1.routes import (
     obsidian,
     projects,
     prompt_templates,
+    quick_capture,
     rag,
     search,
+    settings,
 )
 
 api_router = APIRouter(prefix="/api/v1")
@@ -32,3 +35,6 @@ api_router.include_router(ai.router, prefix="/ai", tags=["ai"])
 api_router.include_router(integrations.router, prefix="/integrations", tags=["integrations"])
 api_router.include_router(obsidian.router, prefix="/obsidian", tags=["obsidian"])
 api_router.include_router(rag.router, prefix="/rag", tags=["rag"])
+api_router.include_router(settings.router, prefix="/settings", tags=["settings"])
+api_router.include_router(quick_capture.router, prefix="/quick-capture", tags=["quick-capture"])
+api_router.include_router(chat.router, prefix="/chat", tags=["chat"])

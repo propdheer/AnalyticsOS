@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.core.config import settings
+from app.services.app_settings_service import effective_ollama_base_url, effective_ollama_default_model
 from app.services.ollama_service import check_ollama, list_models
 
 router = APIRouter()
@@ -11,8 +11,8 @@ def get_ai_status() -> dict:
     available, details = check_ollama()
     return {
         "provider": "ollama",
-        "base_url": settings.ollama_base_url,
-        "default_model": settings.ollama_default_model,
+        "base_url": effective_ollama_base_url(),
+        "default_model": effective_ollama_default_model(),
         "available": available,
         "details": details,
     }
@@ -22,5 +22,5 @@ def get_ai_status() -> dict:
 def get_ai_models() -> dict:
     return {
         "models": list_models(),
-        "default_model": settings.ollama_default_model,
+        "default_model": effective_ollama_default_model(),
     }

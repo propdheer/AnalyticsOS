@@ -2,75 +2,28 @@
 
 **Build Once. Learn Forever.**
 
-AnalyticsOS is a local-first Professional Intelligence Platform for professional memory, project knowledge, local search, RAG, and AI-assisted analytical workflows.
-
 ## Current Status
 
 | Field | Value |
 |---|---|
-| Version | `v0.5.0-alpha` |
-| Milestone | Durable Platform Foundation |
-| Status | Hardening release |
+| Version | `v0.5.1-alpha` |
+| Milestone | Final Recovery Build — UI Rework and Ollama Chat |
+| Status | Recovery-tested patch folder |
 
-## Runtime Path Choice
+## v0.5.1 Highlights
 
-AnalyticsOS does **not** force one storage location.
+- Chat with Ollama is the default landing page.
+- Chat can include AnalyticsOS knowledge context.
+- Sidebar is simpler, narrower, and grouped.
+- Sidebar groups can expand/collapse.
+- Every page shows a unique page ID.
+- Object creation pages include generated IDs.
+- UI capitalization is normalized.
+- Action templates support `{{context}}`, `{{Context}}`, and `{{additional_context}}`.
 
-Each machine can choose its own runtime location:
-
-```text
-Office laptop   -> OneDrive runtime folder
-Personal laptop -> LocalAppData runtime folder
-```
-
-Configure this by running:
-
-```powershell
-.\scripts\configure-runtime-paths.ps1
-```
-
-This writes:
-
-```text
-ANALYTICSOS_DATA_DIR=...
-ANALYTICSOS_KNOWLEDGE_DIR=...
-```
-
-to `.env`.
-
-If no paths are configured, AnalyticsOS uses the earlier repo-relative defaults:
-
-```text
-../data
-../knowledge
-```
-
-## Run Backend
-
-```powershell
-.\scripts\run-backend.ps1
-```
-
-## Run Frontend
-
-```powershell
-.\scripts\run-frontend.ps1
-```
-
-## One-Command Startup
-
-```powershell
-.\scripts\start-analyticsos.ps1
-```
-
-## Validate
+## Run
 
 ```powershell
 .\scripts\test-backend.ps1
-```
-
-With backend running:
-
-```powershell
-.\scripts\run-smoke-test.ps1
+.\scripts\start-analyticsos.ps1
 ```

@@ -6,6 +6,8 @@ $endpoints = @(
     "http://127.0.0.1:8000/health",
     "http://127.0.0.1:8000/version",
     "http://127.0.0.1:8000/api/v1/app/config",
+    "http://127.0.0.1:8000/api/v1/settings",
+    "http://127.0.0.1:8000/api/v1/settings/test/ollama",
     "http://127.0.0.1:8000/api/v1/projects",
     "http://127.0.0.1:8000/api/v1/datasets",
     "http://127.0.0.1:8000/api/v1/business-rules",

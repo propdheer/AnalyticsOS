@@ -1,10 +1,12 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 from app.api.v1.router import api_router
 from app.core.config import settings
 
-APP_VERSION = "0.4.1-alpha"
+APP_VERSION = "0.5.1-alpha"
 
 app = FastAPI(
     title="AnalyticsOS API",
@@ -21,6 +23,20 @@ app.add_middleware(
 )
 
 app.include_router(api_router)
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError) -> JSONResponse:
+    first_error = exc.errors()[0] if exc.errors() else {}
+    field = ".".join(str(part) for part in first_error.get("loc", []))
+    return JSONResponse(
+        status_code=422,
+        content={
+            "detail": first_error.get("msg", "Validation failed."),
+            "field": field,
+            "code": "VALIDATION_ERROR",
+        },
+    )
 
 
 @app.get("/")

@@ -9,11 +9,22 @@ router = APIRouter()
 @router.get("/config")
 def get_app_config() -> AppConfig:
     return AppConfig(
-        api_version="0.4.1-alpha",
+        api_version="0.5.1-alpha",
         environment=settings.environment,
         enabled_features=[
-            "simple-command-center",
-            "guided-next-steps",
+            "ollama-chat",
+            "knowledge-aware-chat",
+            "collapsible-sidebar",
+            "page-ids",
+            "generated-form-ids",
+            "title-case-ui",
+            "template-context-aliases",
+            "runtime-path-choice",
+            "settings-screen",
+            "integration-health-widget",
+            "command-palette",
+            "quick-capture",
+            "action-builder-live-preview",
             "projects",
             "datasets",
             "business-rules",
@@ -29,7 +40,6 @@ def get_app_config() -> AppConfig:
             "action-builder",
             "ollama",
             "obsidian-export",
-            "anythingllm-status",
             "anythingllm-query",
             "save-rag-answer",
         ],

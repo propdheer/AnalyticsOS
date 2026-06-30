@@ -4,12 +4,13 @@ import json
 import urllib.error
 import urllib.request
 
-from app.core.config import settings
+from app.services.app_settings_service import effective_ollama_base_url, effective_ollama_default_model
 
 
 def check_ollama() -> tuple[bool, str]:
+    base_url = effective_ollama_base_url()
     try:
-        with urllib.request.urlopen(f"{settings.ollama_base_url}/api/tags", timeout=2) as response:
+        with urllib.request.urlopen(f"{base_url}/api/tags", timeout=2) as response:
             if response.status == 200:
                 return True, "Ollama is reachable."
             return False, f"Ollama returned status {response.status}."
@@ -18,12 +19,9 @@ def check_ollama() -> tuple[bool, str]:
 
 
 def list_models() -> list[str]:
-    available, _ = check_ollama()
-    if not available:
-        return []
-
+    base_url = effective_ollama_base_url()
     try:
-        with urllib.request.urlopen(f"{settings.ollama_base_url}/api/tags", timeout=3) as response:
+        with urllib.request.urlopen(f"{base_url}/api/tags", timeout=3) as response:
             payload = json.loads(response.read().decode("utf-8"))
             return [model.get("name", "") for model in payload.get("models", []) if model.get("name")]
     except Exception:
@@ -31,7 +29,8 @@ def list_models() -> list[str]:
 
 
 def generate_with_ollama(prompt: str, model: str | None = None) -> str:
-    selected_model = model or settings.ollama_default_model
+    selected_model = model or effective_ollama_default_model()
+    base_url = effective_ollama_base_url()
     body = json.dumps(
         {
             "model": selected_model,
@@ -41,7 +40,7 @@ def generate_with_ollama(prompt: str, model: str | None = None) -> str:
     ).encode("utf-8")
 
     request = urllib.request.Request(
-        f"{settings.ollama_base_url}/api/generate",
+        f"{base_url}/api/generate",
         data=body,
         headers={"Content-Type": "application/json"},
         method="POST",

@@ -5,10 +5,27 @@ from app.core.config import settings
 from app.domain.obsidian import ObsidianExportRequest, ObsidianExportResult
 
 
+def _effective_vault_path() -> str:
+    try:
+        from app.services.app_settings_service import effective_obsidian_vault_path
+        return effective_obsidian_vault_path()
+    except Exception:
+        return settings.obsidian_vault_path
+
+
+def check_obsidian() -> tuple[bool, bool, str]:
+    vault_path = _effective_vault_path()
+    if not vault_path.strip():
+        return False, False, "Set Obsidian vault path in Settings."
+    path = Path(vault_path)
+    return True, path.exists(), f"Vault path: {path}"
+
+
 def export_to_obsidian(payload: ObsidianExportRequest) -> ObsidianExportResult:
+    vault_path = _effective_vault_path()
     base_path = (
-        Path(settings.obsidian_vault_path)
-        if settings.obsidian_vault_path.strip()
+        Path(vault_path)
+        if vault_path.strip()
         else Path(settings.knowledge_dir) / "obsidian-export"
     )
 
@@ -26,7 +43,7 @@ def export_to_obsidian(payload: ObsidianExportRequest) -> ObsidianExportResult:
         path=target_path.as_posix(),
         message=(
             "Exported to configured Obsidian vault."
-            if settings.obsidian_vault_path.strip()
+            if vault_path.strip()
             else "No Obsidian vault configured; exported to local knowledge fallback."
         ),
     )

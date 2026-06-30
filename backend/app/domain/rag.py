@@ -1,8 +1,8 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class RagQueryRequest(BaseModel):
-    question: str
+    question: str = Field(..., min_length=1)
     workspace_slug: str = ""
     mode: str = "query"
     session_id: str = "analyticsos"

@@ -91,15 +91,52 @@ export type ActionRunRecord = {
   created_at: string;
 };
 
+export type ActionPreviewResult = {
+  action_id: string;
+  action_name: string;
+  execution_mode: string;
+  model: string;
+  rendered_prompt: string;
+  output: string;
+  used_ai: boolean;
+};
+
 export type AiModelsPayload = {
   models: string[];
   default_model: string;
 };
 
+export type IntegrationStatus = {
+  name: string;
+  configured: boolean;
+  available: boolean;
+  details: string;
+};
+
 export type IntegrationStatusPayload = {
-  ollama: { name: string; configured: boolean; available: boolean; details: string };
-  obsidian: { name: string; configured: boolean; available: boolean; details: string };
-  anythingllm: { name: string; configured: boolean; available: boolean; details: string };
+  ollama: IntegrationStatus;
+  obsidian: IntegrationStatus;
+  anythingllm: IntegrationStatus;
+};
+
+export type AppSettings = {
+  id: string;
+  data_dir: string;
+  knowledge_dir: string;
+  sync_dir: string;
+  ollama_base_url: string;
+  ollama_default_model: string;
+  anythingllm_base_url: string;
+  anythingllm_api_key: string;
+  anythingllm_workspace_slug: string;
+  obsidian_vault_path: string;
+};
+
+export type SettingsTestResult = {
+  name: string;
+  configured: boolean;
+  available: boolean;
+  details: string;
 };
 
 export type RagQueryResult = {
@@ -109,6 +146,19 @@ export type RagQueryResult = {
   workspace_slug: string;
   citations: Record<string, unknown>[];
   raw: Record<string, unknown>;
+};
+
+export type ChatMessage = {
+  role: "user" | "assistant";
+  content: string;
+};
+
+export type ChatResponse = {
+  answer: string;
+  model: string;
+  used_knowledge: boolean;
+  context_items: Record<string, unknown>[];
+  prompt: string;
 };
 
 export type SearchResult = {
@@ -204,6 +254,21 @@ export async function getAiModels(): Promise<AiModelsPayload> {
   return fetchJson<AiModelsPayload>("/api/v1/ai/models");
 }
 
+export async function chatWithOllama(payload: {
+  message: string;
+  model?: string;
+  use_knowledge?: boolean;
+  use_actions?: boolean;
+  use_projects?: boolean;
+  max_context_items?: number;
+  history?: ChatMessage[];
+}): Promise<ChatResponse> {
+  return fetchJson<ChatResponse>("/api/v1/chat", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+}
+
 export async function runAction(payload: {
   action_id: string;
   execution_mode: string;
@@ -215,6 +280,22 @@ export async function runAction(payload: {
   tone?: string;
 }): Promise<ActionRunRecord> {
   return fetchJson<ActionRunRecord>("/api/v1/actions/run", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+}
+
+export async function previewAction(payload: {
+  action_id: string;
+  execution_mode: string;
+  model?: string;
+  project_id?: string;
+  dataset_id?: string;
+  additional_context?: string;
+  audience?: string;
+  tone?: string;
+}): Promise<ActionPreviewResult> {
+  return fetchJson<ActionPreviewResult>("/api/v1/actions/preview", {
     method: "POST",
     body: JSON.stringify(payload),
   });
@@ -233,6 +314,33 @@ export async function saveActionOutputAsKnowledge(payload: {
 
 export async function getIntegrationStatus(): Promise<IntegrationStatusPayload> {
   return fetchJson<IntegrationStatusPayload>("/api/v1/integrations/status");
+}
+
+export async function getSettings(): Promise<AppSettings> {
+  return fetchJson<AppSettings>("/api/v1/settings");
+}
+
+export async function saveSettings(payload: AppSettings): Promise<AppSettings> {
+  return fetchJson<AppSettings>("/api/v1/settings", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+}
+
+export async function testIntegration(name: "ollama" | "anythingllm" | "obsidian"): Promise<SettingsTestResult> {
+  return fetchJson<SettingsTestResult>(`/api/v1/settings/test/${name}`);
+}
+
+export async function quickCapture(payload: {
+  title: string;
+  content: string;
+  capture_type: string;
+  tags?: string[];
+}): Promise<{ saved: boolean; target_type: string; id: string; message: string }> {
+  return fetchJson("/api/v1/quick-capture", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
 }
 
 export async function queryRag(payload: {
