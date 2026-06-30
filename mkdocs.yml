@@ -1,0 +1,24 @@
+site_name: AnalyticsOS
+site_description: Local-first Professional Intelligence Platform
+site_author: AnalyticsOS Team
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.expand
+    - search.suggest
+    - search.highlight
+
+nav:
+  - Home: docs/index.md
+  - Handbook:
+      - Product:
+          - Welcome: handbook/volume-1-product/00-welcome.md
+          - Manifesto: handbook/volume-1-product/01-manifesto.md
+      - Architecture:
+          - Overview: handbook/volume-2-architecture/00-overview.md
+  - ADRs:
+      - ADR Index: adr/README.md
+  - RFCs:
+      - RFC Index: rfc/README.md

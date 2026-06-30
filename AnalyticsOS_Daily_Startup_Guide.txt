@@ -1,0 +1,51 @@
+AnalyticsOS - Daily Startup Guide
+
+Use these steps every time you restart your laptop or begin a new
+AnalyticsOS session.
+
+1. Open PowerShell
+
+2. Navigate to the AnalyticsOS repository
+
+    cd "C:\Users\Dheer.Madhusudan\OneDrive - Sundrop Brands Limited\Desktop\AnalyticsOS"
+
+3. Activate the virtual environment
+
+    .\.venv\Scripts\Activate.ps1
+
+You should now see:
+
+    (.venv) PS ...
+
+4. Verify the correct Python (optional)
+
+    where.exe python
+    python --version
+
+The first path should point to:
+
+    ...\AnalyticsOS\.venv\Scripts\python.exe
+
+5. Open the project in VS Code
+
+    code .
+
+6. Start working
+
+Run any Python commands, install packages, or start services while the
+virtual environment is active.
+
+7. Finish your session
+
+    deactivate
+
+------------------------------------------------------------------------
+
+Important Notes
+
+-   Create .venv only once.
+-   Activate it every time you open a new terminal.
+-   Never install project packages outside the virtual environment.
+-   If VS Code asks for a Python interpreter, select:
+
+    AnalyticsOS\.venv\Scripts\python.exe
