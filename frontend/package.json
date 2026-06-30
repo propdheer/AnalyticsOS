@@ -1,6 +1,6 @@
 {
   "name": "analyticsos-frontend",
-  "version": "0.0.2-alpha",
+  "version": "0.1.1-alpha",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -14,10 +14,10 @@
     "react-dom": "latest"
   },
   "devDependencies": {
-    "typescript": "latest",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "typescript": "latest",
     "eslint": "latest",
     "eslint-config-next": "latest"
   }

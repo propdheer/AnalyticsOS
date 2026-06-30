@@ -10,9 +10,9 @@ It is not a chatbot. It is an operating system for professional memory, project 
 
 | Field | Value |
 |---|---|
-| Version | `v0.1.0-alpha` |
-| Sprint | MVP Core |
-| Milestone | Persistent Core Backend |
+| Version | `v0.1.1-alpha` |
+| Sprint | MVP Dashboard |
+| Milestone | Visible Dashboard MVP |
 | Status | In development |
 
 ## Current Capabilities
@@ -25,7 +25,7 @@ AnalyticsOS currently supports local API-based management of:
 - Prompt Templates
 - Memories
 
-These are persisted locally as JSON files in the `data/` folder.
+The Dashboard MVP displays this backend data in a visible Next.js interface.
 
 ## Development Quick Start
 
@@ -34,7 +34,7 @@ cd "C:\Users\Dheer.Madhusudan\OneDrive - Sundrop Brands Limited\Desktop\Analytic
 .\.venv\Scripts\Activate.ps1
 ```
 
-Run tests:
+Run backend tests:
 
 ```powershell
 .\scripts\test-backend.ps1
@@ -46,16 +46,16 @@ Run backend:
 .\scripts\run-backend.ps1
 ```
 
-Run quality checks:
+In a second PowerShell window, run frontend:
 
 ```powershell
-.\scripts\run-quality.ps1
+.\scripts\run-frontend.ps1
 ```
 
-Reset local data:
+Open:
 
-```powershell
-.\scripts\reset-local-data.ps1
+```text
+http://localhost:3000
 ```
 
 ## Backend Endpoints
@@ -69,6 +69,13 @@ http://127.0.0.1:8000/api/v1/datasets
 http://127.0.0.1:8000/api/v1/business-rules
 http://127.0.0.1:8000/api/v1/prompt-templates
 http://127.0.0.1:8000/api/v1/memories
+http://127.0.0.1:8000/docs
+```
+
+## Frontend
+
+```text
+http://localhost:3000
 ```
 
 ## Product Foundation

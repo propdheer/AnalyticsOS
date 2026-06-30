@@ -19,39 +19,51 @@
 - Core API foundation
 - Project and Dataset APIs
 
-## Current
-
-### v0.1.0-alpha — MVP Core Backend
-
+### v0.1.0-alpha
 - Persistent local JSON storage
 - Project CRUD
 - Dataset CRUD
 - Business Rule CRUD
 - Prompt Template CRUD
 - Memory CRUD
-- API smoke tests
-- MVP test plan
+
+## Current
+
+### v0.1.1-alpha — Dashboard MVP
+
+- Dashboard shell
+- Backend API integration
+- Summary cards
+- Object lists
+- Frontend developer scripts
+- Dashboard MVP documentation
 
 ## Next
 
-### v0.1.1-alpha — Dashboard MVP
-- Basic Next.js dashboard shell
-- API status card
-- Projects list page
-- Datasets list page
+### v0.1.2-alpha — Dashboard CRUD
 
-### v0.1.2-alpha — PostgreSQL Persistence
+- Create project form
+- Create dataset form
+- Create business rule form
+- Create prompt template form
+- Create memory form
+- Delete actions from dashboard
+
+### v0.1.3-alpha — PostgreSQL Persistence
+
 - SQLAlchemy models
 - Database session management
 - PostgreSQL-backed repositories
 - Migration foundation
 
-### v0.1.3-alpha — Knowledge Indexing MVP
+### v0.1.4-alpha — Knowledge Indexing MVP
+
 - Local folder ingestion
 - Markdown indexing
 - Basic search
 
 ### v0.2.0-alpha — Useful Local Product
+
 - Dashboard-first experience
 - Persistent professional objects
 - Local knowledge search

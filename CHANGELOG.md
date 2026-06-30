@@ -4,6 +4,22 @@ All notable changes to AnalyticsOS will be documented in this file.
 
 This project follows semantic versioning.
 
+## [0.1.1-alpha] - 2026-06-30
+
+### Added
+- Dashboard MVP built with Next.js.
+- Frontend API client.
+- Dashboard summary cards.
+- Object lists for Projects, Datasets, Business Rules, and Memories.
+- Frontend install and run scripts.
+- Dashboard MVP documentation.
+- CORS support for local frontend development.
+- CORS test coverage.
+
+### Changed
+- Updated API version to `0.1.1-alpha`.
+- Updated roadmap with Dashboard CRUD as next release.
+
 ## [0.1.0-alpha] - 2026-06-30
 
 ### Added

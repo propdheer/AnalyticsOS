@@ -16,6 +16,7 @@ nav:
       - Windows Setup: docs/development-windows.md
       - API Smoke Tests: docs/api-smoke-tests.md
       - MVP Test Plan: docs/mvp-test-plan.md
+      - Dashboard MVP: docs/dashboard-mvp.md
   - Handbook:
       - Product:
           - Overview: handbook/volume-1-product/README.md

@@ -64,3 +64,7 @@ models/
 secrets/
 *.pem
 *.key
+
+# Local runtime data
+data/*.json
+!data/.gitkeep

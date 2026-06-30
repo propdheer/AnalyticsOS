@@ -16,6 +16,7 @@ http://127.0.0.1:8000/api/v1/datasets
 http://127.0.0.1:8000/api/v1/business-rules
 http://127.0.0.1:8000/api/v1/prompt-templates
 http://127.0.0.1:8000/api/v1/memories
+http://127.0.0.1:8000/docs
 ```
 
 Expected behavior:
@@ -23,15 +24,20 @@ Expected behavior:
 - `/health` returns healthy status.
 - `/version` returns API version.
 - Core API routes return JSON arrays.
+- API docs are visible through Swagger UI.
 - POST routes create or update records.
 - DELETE routes remove records.
 
-## Data Storage
+## Dashboard Smoke Test
 
-During this MVP phase, records are stored locally as JSON files in:
+Start the frontend:
 
-```text
-data/
+```powershell
+.\scripts\run-frontend.ps1
 ```
 
-This is intentionally simple. PostgreSQL will replace this persistence layer in a later release without changing the API contract.
+Open:
+
+```text
+http://localhost:3000
+```
