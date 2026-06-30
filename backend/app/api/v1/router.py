@@ -16,6 +16,7 @@ from app.api.v1.routes import (
     prompt_templates,
     quick_capture,
     rag,
+    runtime,
     search,
     settings,
 )
@@ -38,3 +39,4 @@ api_router.include_router(rag.router, prefix="/rag", tags=["rag"])
 api_router.include_router(settings.router, prefix="/settings", tags=["settings"])
 api_router.include_router(quick_capture.router, prefix="/quick-capture", tags=["quick-capture"])
 api_router.include_router(chat.router, prefix="/chat", tags=["chat"])
+api_router.include_router(runtime.router, prefix="/runtime", tags=["runtime"])

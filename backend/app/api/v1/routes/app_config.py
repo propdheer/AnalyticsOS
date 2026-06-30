@@ -9,9 +9,12 @@ router = APIRouter()
 @router.get("/config")
 def get_app_config() -> AppConfig:
     return AppConfig(
-        api_version="0.5.1-alpha",
+        api_version="0.5.2-alpha",
         environment=settings.environment,
         enabled_features=[
+            "second-brain-runtime-check",
+            "runtime-status-endpoint",
+            "fixed-tsconfig",
             "ollama-chat",
             "knowledge-aware-chat",
             "collapsible-sidebar",

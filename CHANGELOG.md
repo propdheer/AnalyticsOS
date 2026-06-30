@@ -1,20 +1,17 @@
 # Changelog
 
-## [0.5.1-alpha final recovery build] - 2026-06-30
+## [0.5.2-alpha] - 2026-06-30
 
 ### Fixed
-- Included all backend domain files required by the settings, quick capture, chat, RAG, integration, Obsidian, and action services.
-- Included all backend route files required by the router.
-- Restored `ActionRunResult`.
-- Restored `AppSettings`.
-- Restored `QuickCapture` models.
-- Added import-safe settings/quick capture routes.
-- Added syntax-checked backend recovery build.
+- Repaired invalid `frontend/tsconfig.json` caused by a literal PowerShell newline token.
+- Silenced TypeScript 6 `baseUrl` deprecation warning safely using `ignoreDeprecations`.
 
 ### Added
-- Chat with Ollama.
-- Knowledge-aware chat.
-- Collapsible sidebar.
-- Page IDs.
-- Generated form IDs.
-- Context template aliases.
+- Runtime self-check endpoint: `/api/v1/runtime/status`.
+- Second Brain verification script: `scripts/verify-second-brain.ps1`.
+- v0.5.2 validation script: `scripts/test-v052.ps1`.
+- Updated startup script that prints project root and active virtual environment.
+- Documentation for the Second Brain folder structure.
+
+### Changed
+- App version bumped to `0.5.2-alpha`.

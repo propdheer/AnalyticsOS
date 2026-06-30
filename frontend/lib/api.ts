@@ -169,6 +169,21 @@ export type SearchResult = {
   score: number;
 };
 
+
+export type RuntimeCheck = {
+  name: string;
+  ok: boolean;
+  details: string;
+};
+
+export type RuntimeStatus = {
+  version: string;
+  project_root: string;
+  data_dir: string;
+  knowledge_dir: string;
+  venv: string;
+  checks: RuntimeCheck[];
+};
 export type BackupPayload = {
   version: string;
   projects: Project[];
@@ -200,7 +215,7 @@ async function fetchJson<T>(path: string, init?: RequestInit): Promise<T> {
   if (!response.ok) {
     const body = await response.text();
     throw new Error(
-      `Request failed: ${response.status} ${response.statusText}${body ? ` — ${body}` : ""}`,
+      `Request failed: ${response.status} ${response.statusText}${body ? ` â€” ${body}` : ""}`,
     );
   }
 
@@ -410,4 +425,8 @@ export async function importBackup(payload: BackupPayload): Promise<Record<strin
     method: "POST",
     body: JSON.stringify(payload),
   });
+}
+
+export async function getRuntimeStatus(): Promise<RuntimeStatus> {
+  return fetchJson<RuntimeStatus>("/api/v1/runtime/status");
 }
