@@ -1,0 +1,22 @@
+{
+  "app": {
+    "name": "AnalyticsOS",
+    "tagline": "Build Once. Learn Forever.",
+    "mode": "local-first"
+  },
+  "backend": {
+    "url": "http://127.0.0.1:8000"
+  },
+  "frontend": {
+    "url": "http://localhost:3000"
+  },
+  "features": {
+    "projects": true,
+    "datasets": true,
+    "businessRules": true,
+    "promptTemplates": true,
+    "memories": true,
+    "knowledgeAssets": true,
+    "globalSearch": true
+  }
+}
