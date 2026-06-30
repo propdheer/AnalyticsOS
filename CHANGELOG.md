@@ -4,6 +4,23 @@ All notable changes to AnalyticsOS will be documented in this file.
 
 This project follows semantic versioning.
 
+## [0.1.0-alpha] - 2026-06-30
+
+### Added
+- Local JSON persistence layer.
+- Project CRUD API.
+- Dataset CRUD API.
+- Business Rule CRUD API.
+- Prompt Template CRUD API.
+- Memory CRUD API.
+- Reset local data script.
+- MVP API smoke tests.
+- MVP test plan.
+
+### Changed
+- Updated API version to `0.1.0-alpha`.
+- Expanded roadmap toward dashboard, PostgreSQL, and knowledge indexing.
+
 ## [0.0.7-alpha] - 2026-06-30
 
 ### Added

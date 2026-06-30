@@ -17,4 +17,4 @@ def test_version_endpoint() -> None:
     assert response.status_code == 200
     payload = response.json()
     assert payload["name"] == "AnalyticsOS"
-    assert payload["api_version"] == "0.0.7-alpha"
+    assert payload["api_version"] == "0.1.0-alpha"

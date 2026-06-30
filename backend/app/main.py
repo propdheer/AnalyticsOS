@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from app.api.v1.router import api_router
 from app.core.config import settings
 
-APP_VERSION = "0.0.7-alpha"
+APP_VERSION = "0.1.0-alpha"
 
 app = FastAPI(
     title="AnalyticsOS API",

@@ -1,0 +1,10 @@
+[
+  {
+    "id": "sample-sales-primary",
+    "name": "Sales Primary",
+    "description": "Sample primary sales dataset placeholder.",
+    "dataset_type": "table",
+    "source_system": "Demo",
+    "owner": "AnalyticsOS"
+  }
+]

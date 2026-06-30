@@ -9,7 +9,7 @@ if (-not (Test-Path ".\.venv\Scripts\Activate.ps1")) {
 . .\.venv\Scripts\Activate.ps1
 
 Write-Host "Running Ruff..." -ForegroundColor Green
-ruff check backend tests
+ruff check backend
 
 Write-Host "Running backend tests..." -ForegroundColor Green
 pytest backend\tests

@@ -1,0 +1,10 @@
+[
+  {
+    "id": "notebooklm-slide-brief",
+    "name": "NotebookLM Slide Brief",
+    "description": "Create a concise slide-generation brief from project context.",
+    "template_type": "slide_brief",
+    "template": "Convert the following project context into clear, concise, executive-ready slides: {{context}}",
+    "target_tool": "NotebookLM"
+  }
+]

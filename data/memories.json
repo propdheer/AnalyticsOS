@@ -1,0 +1,10 @@
+[
+  {
+    "id": "local-first-principle",
+    "title": "Local-first principle",
+    "content": "AnalyticsOS should preserve a strong local-first operating mode.",
+    "memory_type": "decision",
+    "source": "Founding principle",
+    "approved": true
+  }
+]

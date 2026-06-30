@@ -10,20 +10,22 @@ It is not a chatbot. It is an operating system for professional memory, project 
 
 | Field | Value |
 |---|---|
-| Version | `v0.0.7-alpha` |
-| Sprint | Sprint 0 |
-| Milestone | Product + Architecture + Core API Foundation |
+| Version | `v0.1.0-alpha` |
+| Sprint | MVP Core |
+| Milestone | Persistent Core Backend |
 | Status | In development |
 
-## Product Foundation
+## Current Capabilities
 
-Core documents:
+AnalyticsOS currently supports local API-based management of:
 
-- `FOUNDING.md`
-- `PRODUCT_SPECIFICATION.md`
-- `ARCHITECTURE.md`
-- `handbook/volume-1-product/`
-- `handbook/volume-2-architecture/`
+- Projects
+- Datasets
+- Business Rules
+- Prompt Templates
+- Memories
+
+These are persisted locally as JSON files in the `data/` folder.
 
 ## Development Quick Start
 
@@ -32,10 +34,10 @@ cd "C:\Users\Dheer.Madhusudan\OneDrive - Sundrop Brands Limited\Desktop\Analytic
 .\.venv\Scripts\Activate.ps1
 ```
 
-Install dependencies:
+Run tests:
 
 ```powershell
-.\scripts\install-python-deps.ps1
+.\scripts\test-backend.ps1
 ```
 
 Run backend:
@@ -44,16 +46,16 @@ Run backend:
 .\scripts\run-backend.ps1
 ```
 
-Run tests:
-
-```powershell
-.\scripts\test-backend.ps1
-```
-
 Run quality checks:
 
 ```powershell
 .\scripts\run-quality.ps1
+```
+
+Reset local data:
+
+```powershell
+.\scripts\reset-local-data.ps1
 ```
 
 ## Backend Endpoints
@@ -64,24 +66,20 @@ http://127.0.0.1:8000/health
 http://127.0.0.1:8000/version
 http://127.0.0.1:8000/api/v1/projects
 http://127.0.0.1:8000/api/v1/datasets
+http://127.0.0.1:8000/api/v1/business-rules
+http://127.0.0.1:8000/api/v1/prompt-templates
+http://127.0.0.1:8000/api/v1/memories
 ```
 
-## Repository Layout
+## Product Foundation
 
-```text
-backend/             FastAPI backend
-frontend/            Next.js dashboard
-plugins/             Optional capability plugins
-browser-extension/   Future browser capture layer
-database/            Database migrations and schemas
-docker/              Docker support files
-handbook/            Engineering handbook
-docs/                Documentation website source
-adr/                 Architecture decision records
-rfc/                 Request for comments documents
-templates/           Reusable documentation templates
-scripts/             Developer automation scripts
-```
+Core documents:
+
+- `FOUNDING.md`
+- `PRODUCT_SPECIFICATION.md`
+- `ARCHITECTURE.md`
+- `handbook/volume-1-product/`
+- `handbook/volume-2-architecture/`
 
 ## License
 

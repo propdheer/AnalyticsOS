@@ -1,24 +1,58 @@
 # AnalyticsOS Roadmap
 
-## Sprint 0 — Foundation
+## Completed
 
-| Release | Name | Outcome |
-|---|---|---|
-| 0.0.2-alpha | Repository Foundation | GitHub-ready repository scaffold |
-| 0.0.3-alpha | Product Foundation | Vision, manifesto, PRD, personas |
-| 0.0.4-alpha | Architecture Foundation | Architecture diagrams, ADRs, data model |
-| 0.0.5-alpha | Development Environment | Docker, backend, frontend, database setup |
-| 0.1.0-alpha | First Running Platform | Local dashboard and backend running |
+### v0.0.2-alpha
+- Repository foundation
+- Backend scaffold
+- Frontend scaffold
+- Documentation scaffold
 
-## v1.0 Definition
+### v0.0.3-alpha
+- Version endpoint
+- Developer scripts
+- Windows development docs
 
-AnalyticsOS v1.0 should allow a user to:
+### v0.0.4-alpha to v0.0.7-alpha
+- Product foundation
+- Architecture foundation
+- Core API foundation
+- Project and Dataset APIs
 
-- Install locally
-- Use a dashboard
-- Connect local LLMs
-- Index knowledge assets
-- Store professional memory
-- Search projects and datasets
-- Generate reusable prompts
-- Automate common analytical workflows
+## Current
+
+### v0.1.0-alpha — MVP Core Backend
+
+- Persistent local JSON storage
+- Project CRUD
+- Dataset CRUD
+- Business Rule CRUD
+- Prompt Template CRUD
+- Memory CRUD
+- API smoke tests
+- MVP test plan
+
+## Next
+
+### v0.1.1-alpha — Dashboard MVP
+- Basic Next.js dashboard shell
+- API status card
+- Projects list page
+- Datasets list page
+
+### v0.1.2-alpha — PostgreSQL Persistence
+- SQLAlchemy models
+- Database session management
+- PostgreSQL-backed repositories
+- Migration foundation
+
+### v0.1.3-alpha — Knowledge Indexing MVP
+- Local folder ingestion
+- Markdown indexing
+- Basic search
+
+### v0.2.0-alpha — Useful Local Product
+- Dashboard-first experience
+- Persistent professional objects
+- Local knowledge search
+- Prompt generation workflows
